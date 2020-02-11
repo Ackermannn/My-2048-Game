@@ -1,35 +1,22 @@
 ﻿#include "Chessboard.h"
+
 Chessboard::Chessboard() {
 	vector<int> temp = {};
 	for (int i = 0; i < 4; i++) temp.push_back(0);
 	for (int i = 0; i < 4; i++) score.push_back(temp);
 	check();
 }
-void Chessboard::down()
-{
-	align("down");
-	merge("down");
-	align("down");
-}
-void Chessboard::up()
-{
-	align("up");
-	merge("up");
-	align("up");
-}
-void Chessboard::left()
-{
-	align("left");
-	merge("left");
-	align("left");
+bool Chessboard::move(string opt) {
+	bool flag1 = false, flag2 = false;
+	flag1 = align(opt);
+	flag2 = merge(opt);
+	align(opt);
+	if (flag1 == false and flag2 == false) // 判断是否有移动
+		return false;
+	else
+		return true;
 }
 
-void Chessboard::right()
-{
-	align("right");
-	merge("right");
-	align("right");
-}
 
 void Chessboard::show()
 {
@@ -101,8 +88,9 @@ bool Chessboard::isWin()
 	return false;
 }
 
-void Chessboard::align(string direction)
+bool Chessboard::align(string direction)
 {
+	bool align_flag = false; // 对齐动作标记
 	// 向下对齐 
 	if (direction == "down")
 	{
@@ -124,7 +112,7 @@ void Chessboard::align(string direction)
 					swap(score[1][col], score[0][col]);
 					flag = 1;
 				}
-
+				if (flag == 1) align_flag = true;
 			}
 		}
 	}
@@ -149,6 +137,7 @@ void Chessboard::align(string direction)
 					swap(score[2][col], score[3][col]);
 					flag = 1;
 				}
+				if (flag == 1) align_flag = true;
 
 			}
 		}
@@ -173,6 +162,7 @@ void Chessboard::align(string direction)
 					swap(score[row][2], score[row][3]);
 					flag = 1;
 				}
+				if (flag == 1) align_flag = true;
 
 			}
 		}
@@ -197,89 +187,71 @@ void Chessboard::align(string direction)
 					swap(score[row][1], score[row][0]);
 					flag = 1;
 				}
+				if (flag == 1) align_flag = true;
 
 			}
 		}
 	}
+	return align_flag;
 }
 
-void Chessboard::merge(string direction)
+bool Chessboard::foo(int* p1, int* p2) {
+	if (*p1 != 0 and *p1 == *p2) {
+		*p1 *= 2; // 保留p1
+		*p2 = 0;
+		return true;
+	}
+	return false;
+}
+
+bool Chessboard::merge(string direction)
 {
-	if (direction == "down") {
+	int flag = false;
+	int* p1, * p2;
+	if (direction == "down") 
 		// 上下合并
 		for (int col = 0; col < 4; col++) {
-
-			if (score[3][col] == score[2][col]) {
-				score[3][col] *= 2;
-				score[2][col] = 0;
-			}
-			if (score[2][col] == score[1][col]) {
-				score[2][col] *= 2;
-				score[1][col] = 0;
-			}
-			if (score[1][col] == score[0][col]) {
-				score[1][col] *= 2;
-				score[0][col] = 0;
-			}
-		}
-	}
+			p1 = &(score[3][col]); p2 = &(score[2][col]);
+			int flag1 = foo(p1, p2);
+			p1 = &(score[2][col]); p2 = &(score[1][col]);
+			int flag2 = foo(p1, p2);
+			p1 = &(score[1][col]); p2 = &(score[0][col]);
+			int flag3 = foo(p1, p2);
+			if (flag1 or flag2 or flag3) flag = true;
+		}	
 	else if (direction == "up")
 		for (int col = 0; col < 4; col++) {
-			if (score[1][col] == score[0][col]) {
-				score[1][col] = 0;
-				score[0][col] *= 2;
-			}
-
-			if (score[2][col] == score[1][col]) {
-				score[2][col] = 0;
-				score[1][col] *= 2;
-			}
-
-			if (score[3][col] == score[2][col]) {
-				score[3][col] = 0;
-				score[2][col] *= 2;
-			}
-
+			p1 = &(score[0][col]); p2 = &(score[1][col]);
+			int flag1 = foo(p1, p2);
+			p1 = &(score[1][col]); p2 = &(score[2][col]);
+			int flag2 = foo(p1, p2);
+			p1 = &(score[2][col]); p2 = &(score[3][col]);
+			int flag3 = foo(p1, p2);
+			if (flag1 or flag2 or flag3) flag = true;
 		}
-	else if (direction == "right") {
+	else if (direction == "right") 
 		for (int row = 0; row < 4; row++) {
-			if (score[row][2] == score[row][3]) {
-				score[row][2] = 0;
-				score[row][3] *= 2;
-			}
-
-			if (score[row][1] == score[row][2]) {
-				score[row][1] = 0;
-				score[row][2] *= 2;
-			}
-			if (score[row][0] == score[row][1]) {
-				score[row][0] = 0;
-				score[row][1] *= 2;
-			}
-
-		}
-
-
-	}
+			p1 = &(score[row][3]); p2 = &(score[row][2]);
+			int flag1 = foo(p1, p2);
+			p1 = &(score[row][2]); p2 = &(score[row][1]);
+			int flag2 = foo(p1, p2);
+			p1 = &(score[row][1]); p2 = &(score[row][0]);
+			int flag3 = foo(p1, p2);
+			if (flag1 or flag2 or flag3) flag = true;
+		}	
 	else if (direction == "left")
 	{
 		// 左右合并
 		for (int row = 0; row < 4; row++) {
-
-			if (score[row][0] == score[row][1]) {
-				score[row][0] *= 2;
-				score[row][1] = 0;
-			}
-			if (score[row][1] == score[row][2]) {
-				score[row][1] *= 2;
-				score[row][2] = 0;
-			}
-			if (score[row][2] == score[row][3]) {
-				score[row][2] *= 2;
-				score[row][3] = 0;
-			}
+			p1 = &(score[row][0]); p2 = &(score[row][1]);
+			int flag1 = foo(p1, p2);
+			p1 = &(score[row][1]); p2 = &(score[row][2]);
+			int flag2 = foo(p1, p2);
+			p1 = &(score[row][2]); p2 = &(score[row][3]);
+			int flag3 = foo(p1, p2);
+			if (flag1 or flag2 or flag3) flag = true;
 		}
-
 	}
+	return flag;
 
 }

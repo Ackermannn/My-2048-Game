@@ -1,5 +1,6 @@
 ﻿#include "Chessboard.h"
 int main() {
+
 	Chessboard chess;
 	char temp;
 	while (true)
@@ -9,7 +10,6 @@ int main() {
 			break;
 		}
 		if (chess.product() == false) break;
-		if (chess.product() == false) break;
 		chess.show();	
 		cin >> temp;		
 		int wrong_flag = 1;
@@ -17,16 +17,24 @@ int main() {
 		{
 			system("cls");
 			wrong_flag = 0;
+			bool move_flag = true;
 
-			if (temp == 'w') chess.up();
-			else if (temp == 's') chess.down();
-			else if (temp == 'a') chess.left();
-			else if (temp == 'd') chess.right();
+			if (temp == 'w') move_flag = chess.move("up");
+			else if (temp == 's') move_flag = chess.move("down");
+			else if (temp == 'a') move_flag = chess.move("left");
+			else if (temp == 'd') move_flag = chess.move("right");
 			else {
 				chess.show();
 				cout << "输入错误,请重新输入: " << endl;
 				wrong_flag = 1;
 				cin >> temp;
+			}
+			if (move_flag == false) {
+				cout << "无法移动,请重新输入: " << endl;
+				chess.show();
+				wrong_flag = 1; 
+				cin >> temp;
+
 			}
 		}
 	}

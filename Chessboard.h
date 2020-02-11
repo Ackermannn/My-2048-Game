@@ -6,18 +6,16 @@
 using namespace std;
 class Chessboard
 {
+	bool foo(int* p1, int* p2);
 public:
 	vector<vector<int>> score; // 棋盘数值
 	vector<vector<int>> free;  // 空白区的坐标
 	Chessboard();
-	void down();
-	void up();
-	void left();
-	void right();
+	bool move(string opt);
 	void show();
 	bool check();
 	bool product();
 	bool isWin();
-	void align(string direction);
-	void merge(string direction);
+	bool align(string direction);
+	bool merge(string direction);
 };
