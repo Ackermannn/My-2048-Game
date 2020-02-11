@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include<iostream>
 #include<vector>
 #include <random>
@@ -7,8 +7,8 @@ using namespace std;
 class Chessboard
 {
 public:
-	vector<vector<int>> score; // ÆåÅÌÊıÖµ
-	vector<vector<int>> free;  // ¿Õ°×ÇøµÄ×ø±ê
+	vector<vector<int>> score; // æ£‹ç›˜æ•°å€¼
+	vector<vector<int>> free;  // ç©ºç™½åŒºçš„åæ ‡
 	Chessboard();
 	void down();
 	void up();

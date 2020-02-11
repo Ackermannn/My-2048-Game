@@ -1,4 +1,4 @@
-#include "Chessboard.h"
+ï»¿#include "Chessboard.h"
 Chessboard::Chessboard() {
 	vector<int> temp = {};
 	for (int i = 0; i < 4; i++) temp.push_back(0);
@@ -33,7 +33,7 @@ void Chessboard::right()
 
 void Chessboard::show()
 {
-	cout << "---ÓÎÏ·---2048---" << endl;
+	cout << "---æ¸¸æˆ---2048---" << endl;
 	cout << "---------------------" << endl;
 	for (auto x : score) {
 		cout << "|";
@@ -49,13 +49,13 @@ void Chessboard::show()
 		cout << "---------------------" << endl;
 
 	}
-	cout << "ÊäÈë²Ù×÷[w][a][s][d]ÈÃÊı×ÖÒÆ¶¯ºÏ²¢: " << endl;
+	cout << "è¾“å…¥æ“ä½œ[w][a][s][d]è®©æ•°å­—ç§»åŠ¨åˆå¹¶: " << endl;
 }
 
 bool Chessboard::check()
 {
 	free = {};
-	// ¼ì²éÊÇ·ñÒÑ¾­ÂúÁË
+	// æ£€æŸ¥æ˜¯å¦å·²ç»æ»¡äº†
 
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
@@ -76,13 +76,13 @@ bool Chessboard::product()
 	}
 	else {
 		int min = 0, max = free.size() - 1;
-		default_random_engine generator(time(NULL));//ÒıÇæ£¬·¢ÉúÆ÷
-		uniform_int_distribution<unsigned> distribution(min, max); //¾ùÔÈ·Ö²¼
+		default_random_engine generator(time(NULL));//å¼•æ“ï¼Œå‘ç”Ÿå™¨
+		uniform_int_distribution<unsigned> distribution(min, max); //å‡åŒ€åˆ†å¸ƒ
 		int product_idx = distribution(generator);
 		int i = free[product_idx][0], j = free[product_idx][1];
 
 
-		// ÓĞ 10% µÄ¸ÅÂÊ²úÉú 4
+		// æœ‰ 10% çš„æ¦‚ç‡äº§ç”Ÿ 4
 		uniform_int_distribution<unsigned> p_distribution(0, 100);
 		int p = p_distribution(generator);
 		if (p > 10) score[i][j] = 2;
@@ -103,7 +103,7 @@ bool Chessboard::isWin()
 
 void Chessboard::align(string direction)
 {
-	// ÏòÏÂ¶ÔÆë 
+	// å‘ä¸‹å¯¹é½ 
 	if (direction == "down")
 	{
 		for (int col = 0; col < 4; col++)
@@ -128,7 +128,7 @@ void Chessboard::align(string direction)
 			}
 		}
 	}
-	// ÏòÉÏ¶ÔÆë 
+	// å‘ä¸Šå¯¹é½ 
 	if (direction == "up")
 	{
 		for (int col = 0; col < 4; col++)
@@ -206,7 +206,7 @@ void Chessboard::align(string direction)
 void Chessboard::merge(string direction)
 {
 	if (direction == "down") {
-		// ÉÏÏÂºÏ²¢
+		// ä¸Šä¸‹åˆå¹¶
 		for (int col = 0; col < 4; col++) {
 
 			if (score[3][col] == score[2][col]) {
@@ -263,7 +263,7 @@ void Chessboard::merge(string direction)
 	}
 	else if (direction == "left")
 	{
-		// ×óÓÒºÏ²¢
+		// å·¦å³åˆå¹¶
 		for (int row = 0; row < 4; row++) {
 
 			if (score[row][0] == score[row][1]) {
