@@ -30,6 +30,7 @@ int main() {
 				cin >> temp;
 			}
 			if (move_flag == false) {
+				if (chess.check()) break;
 				cout << "无法移动,请重新输入: " << endl;
 				chess.show();
 				wrong_flag = 1; 
@@ -38,6 +39,7 @@ int main() {
 			}
 		}
 	}
+	chess.show();
 	cout << "Game is over" << endl;
 	cout << "输入任意字符退出: " << endl;
 	return 0;
